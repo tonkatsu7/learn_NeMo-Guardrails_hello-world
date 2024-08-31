@@ -7,12 +7,29 @@ config = RailsConfig.from_path("./config")
 
 rails = LLMRails(config)
 
+user_greeting = "Sup!"
+
 response = rails.generate(messages=[{
   "role": "user",
-  "content": "Hello! How are you??"
+  "content": user_greeting
 }])
 
-print("response=", response)
+# print("response 1=", response)
 print("\n\n")
 
-print("response=", response['content'])
+print("\nresponse 1=", response['content'])
+
+response = rails.generate(messages=[{
+  "role": "user",
+  "content": user_greeting
+},
+{
+  "role": "assistant",
+  "content": response['content']
+},
+{
+  "role": "user",
+  "content": "What is the capital of France?"
+}])
+
+print("\nresponse 2=", response['content'])
